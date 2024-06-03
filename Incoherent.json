@@ -1,0 +1,60 @@
+{
+    "genre1": [
+        {
+            "question":"g1q1",
+	    "question_url":"images/GoddessKylie.png",
+            "hint":"g1h1",
+            "answer":"g1a1"
+        },
+        {
+            "question":"g1q2",
+	    "question_url":"images/GoddessKylie.png",
+            "hint":"g1h2",
+            "answer":"g1a2"
+        },
+        {
+            "question":"g1q3",
+	    "question_url":"images/GoddessKylie.png",
+            "hint":"g1h3",
+            "answer":"g1a3"
+        }
+
+    ],
+    "genre2": [
+        {
+            "question":"g2q1",
+            "hint":"g2h1",
+            "answer":"g2a1"
+        },
+        {
+            "question":"g2q2",
+            "hint":"g2h2",
+            "answer":"g2a2"
+        },
+        {
+            "question":"g2q3",
+            "hint":"g2h3",
+            "answer":"g2a3"
+        }
+
+    ],
+    "genre3": [
+        {
+            "question":"g3q1",
+            "hint":"g3h1",
+            "answer":"g3a1"
+        },
+        {
+            "question":"g3q2",
+            "hint":"g3h2",
+            "answer":"g3a2"
+        },
+        {
+            "question":"g3q3",
+            "hint":"g3h3",
+            "answer":"g3a3"
+        }
+
+    ]
+
+}
