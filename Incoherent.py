@@ -148,17 +148,30 @@ async def incoherent_task1(client,channel,val,user_id,event,lock,ret):
 async def incoherent(client,interaction,genre,user_id):
     print("inside incoherent")
     channel=interaction.channel
-    
+
     await incoherent_task(client,channel,genre,user_id)
     s='SCORE CARD\n'
     key1=str(interaction.channel_id)
     key2=str(interaction.channel_id)
+   
+    ld=dict()
+
     if players_joined.get(key1)!=None:
         for k in players_joined[key1]:
             scr=0
             if players_score[key2].get(k)!=None:
                 scr=players_score[key2][k]
-            if k!=None: s+=f'\n{k}  :  {scr}'
+                ld[f'{k}']=scr
+    #        if k!=None: s+=f'\n{k}  :  {scr}'
+
+    print(ld)
+    if len(ld) >0:
+        lst=sorted(ld.items(),key=lambda x:x[1],reverse=True)
+        ky,vl= lst[0]
+        
+        for k,v in lst:
+            s+=f'\n{k}   :  {v}'
+            if v==vl:s+=' 🎉'
     await send_embed_to_channel(channel,s,None)
     return
 
