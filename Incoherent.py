@@ -23,7 +23,13 @@ class IncoherentView(discord.ui.View):
             await interaction.response.send_message('Only the user who has invited can start the game',ephemeral=True)
             return
         self.clear_items()
-        await interaction.response.edit_message(content="Game has started",view=self)
+        key=str(interaction.channel_id)
+        if players_joined.get(key)==None:
+            players_joined[key]={None:None}
+        players_joined[key][interaction.user.name]=1
+        embed=discord.Embed()
+        embed.description="Game has started"
+        await interaction.response.edit_message(embed=embed,view=self)
         self.client.loop.create_task(incoherent(self.client,interaction,self.genre,self.user_id))
         return
     
@@ -56,7 +62,7 @@ async def send_embed_to_channel(channel,msg,url):
 
 async def sleeper_task(event):
     print(f'sleeper_task')
-    await asyncio.sleep(10)
+    await asyncio.sleep(30)
     event.set()
     return
 

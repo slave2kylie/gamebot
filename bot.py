@@ -47,7 +47,9 @@ async def incoherent(interaction: discord.Interaction,genre: str):
      print('inside command incoherent')
      Incoherent.cleardata(interaction.channel_id)
      v=Incoherent.IncoherentView(genre,client,interaction.user.id)
-     await interaction.response.send_message("Game Invite",view=v)
+     embed=discord.Embed()
+     embed.description="Game Invite"
+     await interaction.response.send_message(embed=embed,view=v)
      return
 
 
