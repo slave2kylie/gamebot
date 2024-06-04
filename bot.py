@@ -39,10 +39,15 @@ def check_command_permission(interaction: discord.Interaction):
     return False
 
 
+
+
 @client.tree.command()
 @app_commands.autocomplete(genre=incoherent_autocomplete)
 async def incoherent(interaction: discord.Interaction,genre: str):
-     await Incoherent.incoherent(client,interaction,genre)
+     print('inside command incoherent')
+     Incoherent.cleardata(interaction.channel_id)
+     v=Incoherent.IncoherentView(genre,client,interaction.user.id)
+     await interaction.response.send_message("Game Invite",view=v)
      return
 
 

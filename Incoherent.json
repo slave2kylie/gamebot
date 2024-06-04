@@ -1,26 +1,59 @@
 {
-    "genre1": [
+    "Party": [
         {
             "question":"g1q1",
-	    "question_url":"images/GoddessKylie.png",
             "hint":"g1h1",
             "answer":"g1a1"
         },
         {
             "question":"g1q2",
-	    "question_url":"images/GoddessKylie.png",
             "hint":"g1h2",
             "answer":"g1a2"
         },
         {
             "question":"g1q3",
-	    "question_url":"images/GoddessKylie.png",
             "hint":"g1h3",
             "answer":"g1a3"
+        },
+        {
+            "question":"g1q4",
+            "hint":"g1h4",
+            "answer":"g1a4"
+        },
+        {
+            "question":"g1q5",
+            "hint":"g1h5",
+            "answer":"g1a5"
+        },
+        {
+            "question":"g1q6",
+            "hint":"g1h6",
+            "answer":"g1a6"
+        },
+        {
+            "question":"g1q7",
+            "hint":"g1h7",
+            "answer":"g1a7"
+        },
+        {
+            "question":"g1q8",
+            "hint":"g1h8",
+            "answer":"g1a8"
+        },
+        {
+            "question":"g1q9",
+            "hint":"g1h9",
+            "answer":"g1a9"
+        },
+        {
+            "question":"g1q10",
+            "hint":"g1h10",
+            "answer":"g1a10"
         }
 
+
     ],
-    "genre2": [
+    "Kinky": [
         {
             "question":"g2q1",
             "hint":"g2h1",
@@ -38,7 +71,7 @@
         }
 
     ],
-    "genre3": [
+    "Pop Culture": [
         {
             "question":"g3q1",
             "hint":"g3h1",
