@@ -43,9 +43,9 @@ def check_command_permission(interaction: discord.Interaction):
 
 @client.tree.command()
 @app_commands.autocomplete(genre=incoherent_autocomplete)
-async def incoherent(interaction: discord.Interaction,genre: str):
+async def incohearent(interaction: discord.Interaction,genre: str):
      print('inside command incoherent')
-     Incoherent.cleardata(interaction.channel_id)
+     Incoherent.cleardata(interaction.channel_id,True,interaction.user.name)
      v=Incoherent.IncoherentView(genre,client,interaction.user.id)
      embed=discord.Embed()
      embed.description="Game Invite"

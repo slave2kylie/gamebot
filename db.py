@@ -25,6 +25,7 @@ class INCOHERENT_KEYS:
     HINT_URL = 'hint_url'
     ANSWER = 'answer'
     ANSWER_URL = 'answer_url'
+    DESCRIPTION = 'description'
 
 def set(guild:str,key:str,value):
     global mp
