@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 import Incoherent
 import db
+import random
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -32,7 +33,7 @@ def is_owner(interaction: discord.Interaction):
         return False
 
 def check_command_permission(interaction: discord.Interaction):
-    cmdrole = dbi.get(str(interaction.guild_id),db.KEYS.CMD_ROLE)
+    cmdrole = db.get(str(interaction.guild_id),db.KEYS.CMD_ROLE)
     for role in interaction.user.roles:
         if(role.name == cmdrole):
             return True
@@ -48,10 +49,46 @@ async def incohearent(interaction: discord.Interaction,genre: str):
      Incoherent.cleardata(interaction.channel_id,True,interaction.user.name)
      v=Incoherent.IncoherentView(genre,client,interaction.user.id)
      embed=discord.Embed()
-     embed.description="Game Invite"
      await interaction.response.send_message(embed=embed,view=v)
      return
 
+
+@client.tree.command(name='roll-dice')
+async def roll_dice(interaction: discord.Interaction,sides:Optional[int]=6,amount:Optional[int]=1):
+    await interaction.response.defer()
+    print('inside roll_dice')
+    if amount>10: 
+        await interaction.followup.send("Max only 10 dices are allowed")
+        return
+    rolls=[]
+    for x in range(amount):
+        rolls.append(random.randint(1,sides))
+    
+    guild_id=str(interaction.guild_id)
+    embed=discord.Embed(color=db.get(guild_id,db.KEYS.EMBED_COLOR))
+    embed.description=str(rolls)[1:-1]
+    await interaction.followup.send(embed=embed)
+    return
+
+@client.tree.command(name='8-ball')
+async def eight_ball(interaction: discord.Interaction,question: str):
+    await interaction.response.defer()
+    print('inside eight_ball')
+    guild_id=str(interaction.guild_id)
+    embed=discord.Embed(color=db.get(guild_id,db.KEYS.EMBED_COLOR))
+    s="```python\n"
+    s+="\u001b[0;30m\u2223test\n"
+    s+="\u001b[1;30m\u2223test\n"
+    s+="\u001b[2;30m\u2223test\n"
+    s+="\u001b[3;30m\u2223test\n"
+    s+="\u001b[0m\n"
+    s+='```'
+    embed.description="***Magic 8-ball ***"
+    #embed.description=s
+    embed.add_field(name='***Your Question***', value=f"```ansi\n{question}\n```",inline=False)
+    embed.add_field(name='***The Answer***',value=f"```ansi\n{db.eight_ball[random.randint(0,len(db.eight_ball)-1)]}\n```",inline=False)
+    await interaction.followup.send(embed=embed)
+    return
 
 @client.tree.command(name='setup')
 @app_commands.check(is_owner)

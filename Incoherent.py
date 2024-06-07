@@ -113,11 +113,11 @@ async def incoherent_task(client,channel,genre,user_id):
 
 async def incoherent_task1(client,channel,val,user_id,event,lock,ret):
     print(f'inside incoherent_task1 ')
-    question=str(val[db.INCOHERENT_KEYS.QUESTION]).lower()
-    hint=str(val[db.INCOHERENT_KEYS.HINT]).lower()
-    answer=str(val[db.INCOHERENT_KEYS.ANSWER]).lower()
+    question=val[db.INCOHERENT_KEYS.QUESTION]
+    hint=val[db.INCOHERENT_KEYS.HINT]
+    answer=val[db.INCOHERENT_KEYS.ANSWER]
     description=''
-    if val.get(db.INCOHERENT_KEYS.DESCRIPTION)!=None : description=str(val[db.INCOHERENT_KEYS.DESCRIPTION]).lower()
+    if val.get(db.INCOHERENT_KEYS.DESCRIPTION)!=None : description=val[db.INCOHERENT_KEYS.DESCRIPTION]
     print(f'{question},{hint},{answer},{description}')
     await send_embed_to_channel(channel,question,None)
     key=str(channel.id)
@@ -139,7 +139,7 @@ async def incoherent_task1(client,channel,val,user_id,event,lock,ret):
             ret.r=2
             event.set()
             return
-        if cstr==answer:
+        if cstr==answer.lower():
             await lock.acquire()
             v=0
             if players_score[key].get(author)==None:
