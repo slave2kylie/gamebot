@@ -45,16 +45,24 @@ def check_command_permission(interaction: discord.Interaction):
 @client.tree.command()
 @app_commands.autocomplete(genre=incoherent_autocomplete)
 async def incohearent(interaction: discord.Interaction,genre: str):
-     print('inside command incoherent')
-     Incoherent.cleardata(interaction.channel_id,True,interaction.user.name)
-     v=Incoherent.IncoherentView(genre,client,interaction.user.id)
-     embed=discord.Embed()
-     await interaction.response.send_message(embed=embed,view=v)
-     return
+    """Guess the gibberish"""
+    await interaction.response.defer()
+    print('inside command incoherent')
+    Incoherent.cleardata(interaction.channel_id,True,interaction.user)
+    guild_id=str(interaction.guild_id)
+    embed=discord.Embed(color=db.get(guild_id,db.KEYS.EMBED_COLOR),title='**INCOHEARENT**')
+    embed.description="> Guess the gibberish"
+    name=interaction.user.nick
+    if name==None: name=interaction.user.name
+    embed.add_field(name="Players",value=name)
+    v=Incoherent.IncoherentView(genre,client,interaction.user.id,embed)
+    await interaction.followup.send(embed=embed,view=v)
+    return
 
 
 @client.tree.command(name='roll-dice')
 async def roll_dice(interaction: discord.Interaction,sides:Optional[int]=6,amount:Optional[int]=1):
+    """Roll some dice"""
     await interaction.response.defer()
     print('inside roll_dice')
     if amount>10: 
@@ -66,34 +74,40 @@ async def roll_dice(interaction: discord.Interaction,sides:Optional[int]=6,amoun
     
     guild_id=str(interaction.guild_id)
     embed=discord.Embed(color=db.get(guild_id,db.KEYS.EMBED_COLOR))
-    embed.description=str(rolls)[1:-1]
-    await interaction.followup.send(embed=embed)
+    embed.description=f'Lucky you! You just rolled:\n\n{str(rolls)[1:-1]}'
+    #url="https://images.rawpixel.com/image_png_social_square/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA4L3JtNTU4LWVsZW1lbnQtZGljZS1waW5rLTAwMS5wbmc.png"
+    url="images/lowqualitypinkdices.png"
+    f = discord.File(url,filename='image.png')
+    #print('loaded file')
+    embed.set_thumbnail(url='attachment://image.png')
+    #print('set embed url')
+    await interaction.followup.send(file=f,embed=embed)
     return
 
 @client.tree.command(name='8-ball')
 async def eight_ball(interaction: discord.Interaction,question: str):
+    """Ask the magic 8-ball a question"""
     await interaction.response.defer()
     print('inside eight_ball')
     guild_id=str(interaction.guild_id)
-    embed=discord.Embed(color=db.get(guild_id,db.KEYS.EMBED_COLOR))
-    s="```python\n"
-    s+="\u001b[0;30m\u2223test\n"
-    s+="\u001b[1;30m\u2223test\n"
-    s+="\u001b[2;30m\u2223test\n"
-    s+="\u001b[3;30m\u2223test\n"
-    s+="\u001b[0m\n"
-    s+='```'
-    embed.description="***Magic 8-ball ***"
+    embed=discord.Embed(color=db.get(guild_id,db.KEYS.EMBED_COLOR),title='***Magic 8-Ball***')
+   # s="Your Question\n"
+    #s+=f'> {question}\n'
+    #s+='The Answer\n'
+    #s+=f'> {db.eight_ball[random.randint(0,len(db.eight_ball)-1)]}'
+    embed.add_field(name="Your Question", value=f'> {question}',inline=False)
+    embed.add_field(name='The Answer', value=f'> {db.eight_ball[random.randint(0,len(db.eight_ball)-1)]}',inline=False)
+    
+    #embed.description='> **Magic 8-ball**'
     #embed.description=s
-    embed.add_field(name='***Your Question***', value=f"```ansi\n{question}\n```",inline=False)
-    embed.add_field(name='***The Answer***',value=f"```ansi\n{db.eight_ball[random.randint(0,len(db.eight_ball)-1)]}\n```",inline=False)
+    
     await interaction.followup.send(embed=embed)
     return
 
 @client.tree.command(name='setup')
 @app_commands.check(is_owner)
 async def setup(interaction: discord.Interaction,embed_color: str,role: discord.Role):
-    """Set up bot for this server"""
+    """Set up game-bot for this server"""
     print("inside setup")
     embed_color="0x"+embed_color
     embed_color_int=int(embed_color,16)
